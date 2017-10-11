@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
        :host {
-        --app-primary-color: #3284BF;
+        --app-primary-color: #FFFFFF;
         --app-secondary-color: black;
 
         display: block;
@@ -47,12 +47,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       app-header {
-        color: #fff;
+        color: #302D2D;
         background-color: var(--app-primary-color);
       }
 
+
       app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
+        --paper-icon-button-ink-color: #242323;
       }
       /* .drawer-list {
         margin: 0 20px;
@@ -91,7 +92,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: bold;
       }
 
-		
+      .header-div {
+        box-shadow: 0px 5px 2px -3px rgba(0, 0, 0, 0.05);
+      }
     </style>
 
     <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
@@ -136,10 +139,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div hidden$="{{!headerSearchBarIsHidden}}">
       <app-header-layout>
-        <app-header fixed effects="waterfall" slot="header">
+        <app-header fixed effects="waterfall" slot="header" class="header-div">
           <app-toolbar>
             <paper-icon-button id="toggle" icon="my-icons:menu" on-tap="toggleMenu"></paper-icon-button>
-            <div main-title>EMR</div>
+            <div main-title>BaseEMR</div>
             <paper-icon-button icon="my-icons:search" on-tap="toggleSearch"></paper-icon-button>
           </app-toolbar>
 
@@ -217,7 +220,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
     <div hidden$="{{headerSearchBarIsHidden}}">
-      <paper-input id="searchBox"  placeholder="Search Patient" on-tap="toggleSearch")>
+      <paper-input id="searchBox" placeholder="Search Patient" on-tap="toggleSearch" )>
         <paper-icon-button icon="my-icons:arrow-back" slot="prefix"></paper-icon-button>
         <!-- <paper-icon-button slot="suffix" onclick="clearInput()" icon="my-icons:close" alt="clear" title="clear"> -->
       </paper-input>
@@ -292,8 +295,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       toggleSearch() {
         this.headerSearchBarIsHidden = !this.headerSearchBarIsHidden
 
-        if(this.headerSearchBarIsHidden == false)
-        {
+        if (this.headerSearchBarIsHidden == false) {
           this.$.searchBox.focus();
         }
 

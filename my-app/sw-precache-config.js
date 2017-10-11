@@ -21,7 +21,7 @@ module.exports = {
   runtimeCaching: [
     {
       urlPattern: /\/bower_components\/webcomponentsjs\/.*.js/,
-      handler: 'fastest',
+      handler: 'networkFirst',
       options: {
         cache: {
           name: 'webcomponentsjs-polyfills-cache',
