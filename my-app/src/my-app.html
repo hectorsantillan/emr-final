@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="my-icons.html">
+<link rel="import" href="shared-styles.html">
 
 <link rel="lazy-import" href="my-dashboard.html">
 <link rel="lazy-import" href="my-view2.html">
@@ -34,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="my-app">
   <template>
-    <style>
+    <style  include="shared-styles">
        :host {
         --app-primary-color: #FFFFFF;
         --app-secondary-color: black;
@@ -142,7 +143,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header fixed effects="waterfall" slot="header" class="header-div">
           <app-toolbar>
             <paper-icon-button id="toggle" icon="my-icons:menu" on-tap="toggleMenu"></paper-icon-button>
-            <div main-title>BaseEMR</div>
+            <iron-icon class="my-app-header" icon="my-icons-48:logo48"></iron-icon> Base<font color="#673AB7">EMR</font>
+            <div main-title></div>
             <paper-icon-button icon="my-icons:search" on-tap="toggleSearch"></paper-icon-button>
           </app-toolbar>
 
