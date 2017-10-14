@@ -13,8 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
@@ -30,15 +30,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="my-dashboard.html">
 <link rel="lazy-import" href="my-view2.html">
 <link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="my-patients.html">
 <link rel="lazy-import" href="my-view404.html">
 
 
 <dom-module id="my-app">
   <template>
-    <style  include="shared-styles">
-       :host {
+    <style include="shared-styles">
+      :host {
         --app-primary-color: #FFFFFF;
-        --app-secondary-color: black;
+        --app-secondary-color: #000000;
 
         display: block;
       }
@@ -48,14 +49,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       app-header {
-        color: #302D2D;
+        color: #000000;
         background-color: var(--app-primary-color);
       }
 
 
       app-header paper-icon-button {
-        --paper-icon-button-ink-color: #242323;
+        --paper-icon-button-ink-color: #000000;
       }
+
       /* .drawer-list {
         margin: 0 20px;
       } */
@@ -67,6 +69,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--app-secondary-color);
         /* line-height: 40px; */
       }
+
+      .drawer-list a:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
       /* .drawer-list a.iron-selected {
         color: black;
         font-weight: bold;
@@ -89,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .iron-selected .menuSelected {
-        color: black;
+        color: #673AB7;
         font-weight: bold;
       }
 
@@ -143,7 +150,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header fixed effects="waterfall" slot="header" class="header-div">
           <app-toolbar>
             <paper-icon-button id="toggle" icon="my-icons:menu" on-tap="toggleMenu"></paper-icon-button>
-            <iron-icon class="my-app-header" icon="my-icons-48:logo48"></iron-icon> Base<font color="#673AB7">EMR</font>
+            <iron-icon class="my-app-header" icon="my-icons-48:logo48"></iron-icon> Base
+            <font color="#673AB7">EMR</font>
             <div main-title></div>
             <paper-icon-button icon="my-icons:search" on-tap="toggleSearch"></paper-icon-button>
           </app-toolbar>
@@ -157,50 +165,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
 
                 <a name="dashboard" href="[[rootPath]]">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:dashboard" slot="item-icon"></iron-icon> <span class="menuSelected">Dashboard</span>
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:dashboard" slot="item-icon"></iron-icon>
+                    <span>Dashboard</span>
                   </paper-icon-item>
                 </a>
 
                 <a name="view2" href="[[rootPath]]view2">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:add-alert" slot="item-icon"></iron-icon> <span class="menuSelected">Notifications</span>
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:add-alert" slot="item-icon"></iron-icon>
+                    <span>Notifications</span>
                   </paper-icon-item>
                 </a>
 
                 <a name="view3" href="[[rootPath]]view3">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:event" slot="item-icon"></iron-icon> <span class="menuSelected">Appointments</span>
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:event" slot="item-icon"></iron-icon>
+                    <span>Appointments</span>
                   </paper-icon-item>
                 </a>
 
-                <a name="Patients" href="[[rootPath]]Patients">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:supervisor-account" slot="item-icon"></iron-icon> <span class="menuSelected">Patients</span>
+                <a name="patients" href="[[rootPath]]patients">
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:supervisor-account" slot="item-icon"></iron-icon>
+                    <span>Patients</span>
                   </paper-icon-item>
                 </a>
 
-                <a name="Queue" href="[[rootPath]]Queue">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:list" slot="item-icon"></iron-icon> <span class="menuSelected">Queue</span>
+                <a name="queue" href="[[rootPath]]queue">
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:list" slot="item-icon"></iron-icon>
+                    <span>Queue</span>
                   </paper-icon-item>
                 </a>
 
-                <a name="Billing" href="[[rootPath]]Billing">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:send" slot="item-icon"></iron-icon> <span class="menuSelected">Billing</span>
+                <a name="billing" href="[[rootPath]]billing">
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:send" slot="item-icon"></iron-icon>
+                    <span>Billing</span>
                   </paper-icon-item>
                 </a>
 
-                <a name="Collection" href="[[rootPath]]Collection">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:payment" slot="item-icon"></iron-icon> <span class="menuSelected">Collection</span>
+                <a name="collection" href="[[rootPath]]collection">
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:payment" slot="item-icon"></iron-icon>
+                    <span>Collection</span>
                   </paper-icon-item>
                 </a>
 
-                <a name="Reports" href="[[rootPath]]Reports">
-                  <paper-icon-item toggles="true">
-                    <iron-icon icon="my-icons:trending-up" slot="item-icon"></iron-icon> <span class="menuSelected">Reports</span>
+                <a name="reports" href="[[rootPath]]reports">
+                  <paper-icon-item toggles="true" class="menuSelected">
+                    <iron-icon icon="my-icons:trending-up" slot="item-icon"></iron-icon>
+                    <span>Reports</span>
                   </paper-icon-item>
                 </a>
 
@@ -215,6 +231,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <my-dashboard name="dashboard"></my-dashboard>
             <my-view2 name="view2"></my-view2>
             <my-view3 name="view3"></my-view3>
+            <my-patients name="patients"></my-patients>
             <my-view404 name="view404"></my-view404>
           </iron-pages>
         </app-drawer-layout>
@@ -280,6 +297,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           null,
           this._showPage404.bind(this),
           true);
+
       }
 
       _showPage404() {
@@ -300,9 +318,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.headerSearchBarIsHidden == false) {
           this.$.searchBox.focus();
         }
-
-
       }
+
 
 
     }
