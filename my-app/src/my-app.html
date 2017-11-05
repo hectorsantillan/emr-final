@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="shared-styles.html">
 
@@ -58,9 +59,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-icon-button-ink-color: #000000;
       }
 
-      /* .drawer-list {
-        margin: 0 20px;
-      } */
+      .drawer-list {
+        margin: 16px;
+      }
 
       .drawer-list a {
         display: block;
@@ -103,6 +104,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .header-div {
         box-shadow: 0px 5px 2px -3px rgba(0, 0, 0, 0.05);
       }
+
+      .avatar {
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        box-sizing: border-box;
+        background-color: #DDD;
+      }
+
+      .pad {
+        padding: 0 16px;
+        @apply --layout-flex;
+        @apply --layout-vertical;
+      }
+
+      .primary {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .shortText,
+      .longText {
+        font-size: 14px;
+      }
+
+      .longText {
+        color: gray;
+        display: none;
+      }
+
+      paper-fab {
+        position: fixed;
+        right: 16px;
+        bottom: -20px;
+      }
+
+      .divHeaderLabelLocation {
+        /* padding: 0 16px 8px; */
+        font-size: 14px;
+        color: rgb(56, 56, 56);
+        @apply --layout-flex;
+        @apply --layout-vertical;
+      }
     </style>
 
     <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
@@ -111,141 +155,104 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
 
-    <!-- <app-drawer-layout fullbleed narrow="{{narrow}}"> -->
-    <!-- Drawer content -->
-    <!-- <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]view1">View One</a>          
-          <a name="view2" href="[[rootPath]]view2">View Two</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
-        </iron-selector>
-      </app-drawer> -->
 
-    <!-- Main content -->
-    <!-- <app-header-layout has-scrolling-region>
-
-        <app-header slot="header" condenses reveals effects="waterfall">
+    <app-drawer-layout fullbleed narrow="{{narrow}}" id="drawerLayout">
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+        <app-header fixed>
           <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
-          </app-toolbar>
-        </app-header>
-
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
-          <my-view1 name="view1"></my-view1>            
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
-        </iron-pages>
-      </app-header-layout>
-    </app-drawer-layout> -->
-
-    <div hidden$="{{!headerSearchBarIsHidden}}">
-      <app-header-layout>
-        <app-header fixed effects="waterfall" slot="header" class="header-div">
-          <app-toolbar>
-            <paper-icon-button id="toggle" icon="my-icons:menu" on-tap="toggleMenu"></paper-icon-button>
-            <iron-icon class="my-app-header" icon="my-icons-48:logo48"></iron-icon> Base
-            <font color="#673AB7">EMR</font>
-            <div main-title></div>
-            <paper-icon-button icon="my-icons:search" on-tap="toggleSearch"></paper-icon-button>
-          </app-toolbar>
-
-        </app-header>
-
-        <app-drawer-layout id="drawerLayout">
-          <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-            <div class="drawer-content">
-              <!-- <app-toolbar>Menu</app-toolbar> -->
-              <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-
-                <a name="dashboard" href="[[rootPath]]">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:dashboard" slot="item-icon"></iron-icon>
-                    <span>Dashboard</span>
-                  </paper-icon-item>
-                </a>
-
-                <a name="view2" href="[[rootPath]]view2">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:add-alert" slot="item-icon"></iron-icon>
-                    <span>Notifications</span>
-                  </paper-icon-item>
-                </a>
-
-                <a name="view3" href="[[rootPath]]view3">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:event" slot="item-icon"></iron-icon>
-                    <span>Appointments</span>
-                  </paper-icon-item>
-                </a>
-
-                <a name="patients" href="[[rootPath]]patients">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:supervisor-account" slot="item-icon"></iron-icon>
-                    <span>Patients</span>
-                  </paper-icon-item>
-                </a>
-
-                <a name="queue" href="[[rootPath]]queue">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:list" slot="item-icon"></iron-icon>
-                    <span>Queue</span>
-                  </paper-icon-item>
-                </a>
-
-                <a name="billing" href="[[rootPath]]billing">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:send" slot="item-icon"></iron-icon>
-                    <span>Billing</span>
-                  </paper-icon-item>
-                </a>
-
-                <a name="collection" href="[[rootPath]]collection">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:payment" slot="item-icon"></iron-icon>
-                    <span>Collection</span>
-                  </paper-icon-item>
-                </a>
-
-                <a name="reports" href="[[rootPath]]reports">
-                  <paper-icon-item toggles="true" class="menuSelected">
-                    <iron-icon icon="my-icons:trending-up" slot="item-icon"></iron-icon>
-                    <span>Reports</span>
-                  </paper-icon-item>
-                </a>
-
-                <!-- <a name="view1" href="[[rootPath]]view1">View One</a>
-                <a name="view2" href="[[rootPath]]view2">View Two</a>
-                <a name="view3" href="[[rootPath]]view3">View Three</a> -->
-              </iron-selector>
+            <iron-image class="avatar" sizing="contain" src=""></iron-image>
+            <div class="pad">
+              <div class="primary">Dr. Liz Grimes</div>
+              <div class="shortText">MD</div>
+              <div class="longText"></div>
             </div>
-          </app-drawer>
+          </app-toolbar>
 
-          <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-            <my-dashboard name="dashboard"></my-dashboard>
-            <my-view2 name="view2"></my-view2>
-            <my-view3 name="view3"></my-view3>
-            <my-patients name="patients"></my-patients>
-            <my-view404 name="view404"></my-view404>
-          </iron-pages>
-        </app-drawer-layout>
-      </app-header-layout>
-    </div>
+          <app-toolbar>
+            <div class="divHeaderLabelLocation">Location: (not set)</div>
+          </app-toolbar>
+          <paper-fab mini icon="my-icons:my-location"></paper-fab>
+        </app-header>
 
-    <div hidden$="{{headerSearchBarIsHidden}}">
-      <paper-input id="searchBox" placeholder="Search Patient" on-tap="toggleSearch" )>
-        <paper-icon-button icon="my-icons:arrow-back" slot="prefix"></paper-icon-button>
-        <!-- <paper-icon-button slot="suffix" onclick="clearInput()" icon="my-icons:close" alt="clear" title="clear"> -->
-      </paper-input>
-    </div>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="dashboard" href="[[rootPath]]">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:dashboard" slot="item-icon"></iron-icon>
+              <span>Dashboard</span>
+            </paper-icon-item>
+          </a>
 
+          <a name="view2" href="[[rootPath]]view2">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:add-alert" slot="item-icon"></iron-icon>
+              <span>Notifications</span>
+            </paper-icon-item>
+          </a>
 
+          <a name="view3" href="[[rootPath]]view3">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:event" slot="item-icon"></iron-icon>
+              <span>Appointments</span>
+            </paper-icon-item>
+          </a>
+
+          <a name="patients" href="[[rootPath]]patients">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:supervisor-account" slot="item-icon"></iron-icon>
+              <span>Patients</span>
+            </paper-icon-item>
+          </a>
+
+          <a name="queue" href="[[rootPath]]queue">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:list" slot="item-icon"></iron-icon>
+              <span>Queue</span>
+            </paper-icon-item>
+          </a>
+
+          <a name="billing" href="[[rootPath]]billing">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:send" slot="item-icon"></iron-icon>
+              <span>Billing</span>
+            </paper-icon-item>
+          </a>
+
+          <a name="collection" href="[[rootPath]]collection">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:payment" slot="item-icon"></iron-icon>
+              <span>Collection</span>
+            </paper-icon-item>
+          </a>
+
+          <a name="reports" href="[[rootPath]]reports">
+            <paper-icon-item toggles="true" class="menuSelected">
+              <iron-icon icon="my-icons:trending-up" slot="item-icon"></iron-icon>
+              <span>Reports</span>
+            </paper-icon-item>
+          </a>
+        </iron-selector>
+      </app-drawer>
+
+      <!-- <app-header-layout fullbleed>  -->
+          <!-- <app-header slot="header" fixed>
+            <app-toolbar>
+              <paper-icon-button id="toggle" icon="my-icons:menu" drawer-toggle></paper-icon-button>
+              <div main-title>Patients</div>
+              <paper-icon-button icon="my-icons:search" on-tap="toggleSearch"></paper-icon-button>              
+            </app-toolbar>
+          </app-header> -->
+
+      <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+        <my-dashboard name="dashboard"></my-dashboard>
+        <my-view2 name="view2"></my-view2>
+        <my-view3 name="view3"></my-view3>
+        <my-patients narrow="{{narrow}}" name="patients"></my-patients>
+        <my-view404 name="view404"></my-view404>
+      </iron-pages>
+
+    <!-- </app-header-layout> -->
+
+    </app-drawer-layout>
 
   </template>
 
@@ -268,6 +275,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           headerSearchBarIsHidden: {
             type: Boolean,
             value: true
+          },
+          narrow: {
+            type: Boolean,
+            notify: true
           }
         };
       }
@@ -320,6 +331,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
+
+      ready() {
+        super.ready();
+        this.addEventListener('toggleDrawer', (e) => this._onChangeSection(e));
+        // this.addEventListener('on-tap', (e) => this._onChangeSection(e));
+      }
+
+      _onChangeSection(e) {
+        if (this.$.drawerLayout.forceNarrow || !this.$.drawerLayout.narrow) {
+          this.$.drawerLayout.forceNarrow = !this.$.drawerLayout.forceNarrow;
+        } else {
+          this.$.drawerLayout.drawer.toggle();
+        }
+        // alert(`thing count is ${this.narrow}`);
+      }
 
 
     }
