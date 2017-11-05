@@ -9,22 +9,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<!-- <link rel="import" href="../bower_components/paper-styles/color.html">
-<link rel="import" href="../bower_components/paper-styles/typography.html"> -->
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
-
-<!-- <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html"> -->
 <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
-
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="my-icons.html">
 <!-- <link rel="import" href="shared-styles.html"> -->
@@ -102,42 +95,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       @media (max-width: 768px) {
         iron-list {
           margin: 16px;
-          /* margin-top: 64px; */
+          /* margin-top: 0px; */
           display: flex;
           height: 100vh;
           flex-direction: column;
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
         }
 
-        /* app-header-layout {
-          position: fixed;
-          margin-left: 0px;
-          width: 100%;
-        } */
       }
 
       @media (min-width: 768px) {
         iron-list {
           width: 736px;
           margin: 16px auto;
-          margin-top: 0px;
+          /* margin-top: 0px; */
           height: 100vh;
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
         }
-        /* app-header-layout {
-          position: fixed;
-          margin-left: 240px;
-          width: calc(100%-240px);
-        } */
+
       }
 
-      /* paper-icon-button.menu:not([narrow]) [drawer-toggle] {
-        display: none;
-      }  */
-
-      app-toolbar {
-        color: #DDD;
-        background-color: #6211e4;
+      app-header {
+        color: rgb(255, 255, 255);
+        background-color: #673AB7;
       }
 
       paper-fab.fab-menu {
@@ -151,13 +131,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         right: 40px;
         bottom: 104px;
       }
+
+      paper-icon-button.menu {
+        margin-right: 16px;
+      }
+
     </style>
 
-    <!-- <div style="style="position: fixed; height: 128px; background-color: red; display: block; width: 100%;">test</div>     -->
-
     <iron-ajax auto url="src/data.json" last-response="{{items}}"></iron-ajax>
-
-
 
     <app-header-layout fullbleed has-scrolling-region>
       <app-header fixed slot="header">
@@ -166,9 +147,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div main-title>Patients</div>
           <paper-icon-button icon="my-icons:search" on-tap="toggleSearch"></paper-icon-button>
         </app-toolbar>
-        <app-toolbar></app-toolbar>
       </app-header>
-
+      
       <iron-scroll-threshold on-lower-threshold="loadMoreData" id="threshold">
         <iron-list items="[[items]]" as="item" selection-enabled multi-selection scroll-target="threshold">
           <template>
@@ -182,17 +162,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <iron-icon icon$="[[iconForItem(item)]]"></iron-icon>
               </div>
-            </div>
+            </div> 
           </template>
         </iron-list>
+       
       </iron-scroll-threshold>
-
     </app-header-layout>
 
-
-    <!-- <paper-fab mini icon="my-icons:menu" on-tap="togglePaperFab"></paper-fab>
-    <paper-fab mini icon="my-icons:menu" on-tap="togglePaperFab"></paper-fab>
-    <paper-fab mini class="fab-search" mini icon="my-icons:search" on-tap="togglePaperFab"></paper-fab> -->
     <paper-fab class="fab-menu" icon="my-icons:menu" on-tap="togglePaperFab"></paper-fab>
 
   </template>
@@ -239,7 +215,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       loadMoreDat() {
         var self = this;
         var people = e.detail.response.results;
-        people.forEach(function(element) {
+        people.forEach(function (element) {
           self.push('items', element);
         });
 
