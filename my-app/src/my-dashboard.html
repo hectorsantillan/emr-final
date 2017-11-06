@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="my-icons.html">
 
 <dom-module id="my-dashboard">
   <template>
@@ -19,20 +20,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+
+      app-header {
+        color: rgb(255, 255, 255);
+        background-color: #673AB7;
+      }
+
+      paper-icon-button.menu {
+        margin-right: 16px;
+      }
     </style>
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>View One</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-    </div>
+    <app-header-layout fullbleed has-scrolling-region>
+      <app-header fixed slot="header">
+        <app-toolbar primary>
+          <paper-icon-button class="menu" icon="my-icons:menu" drawer-toggle on-tap="toggleDrawer"></paper-icon-button>
+          <div main-title>Dashboard</div>
+        </app-toolbar>
+      </app-header>
+
+      <div class="card">
+        <p>Content soon.</p>
+      </div>
+
+    </app-header-layout>
   </template>
 
   <script>
     class MyDashboard extends Polymer.Element {
       static get is() { return 'my-dashboard'; }
+
+      static get properties() {
+        return {
+          narrow: {
+            type: Boolean,
+            notify: true
+          }
+        };
+      }
+
+      toggleDrawer() {
+        this.dispatchEvent(new CustomEvent('toggleDrawer', {
+          bubbles: true, composed: true, detail: {
+            narrow: this.$.narrow
+          }
+        }));
+        this.$.narrow = !this.$.narrow;
+      }    
+
     }
+
+
+
+    
 
     window.customElements.define(MyDashboard.is, MyDashboard);
   </script>
